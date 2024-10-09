@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,100..900;1,100..900&family=Bai+Jamjuree:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Hind+Siliguri:wght@300;400;500&family=Inter:wght@100..900&family=WindSong&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* HTML: <div class="loader"></div> */
+
+.loader-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: #0000007e;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+.loader {
+  width: 5rem;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #312e81;
+  --_m: 
+    conic-gradient(#0000 10%,#000),
+    linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  -webkit-mask-composite: source-out;
+          mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {to{transform: rotate(1turn)}}
+
+@layer base {
+
+    html, body {
+        @apply w-full h-full font-[62.5%] box-border m-0 p-0 font-sans bg-slate-300 
+    }
+
+    button, a {
+        @apply cursor-pointer
+    }
+}
+
+@layer components {
+    .button {
+        @apply font-anybody text-center font-bold tracking-widest focus:outline-none border-2  
+            rounded-lg uppercase;
+    }
+}
+
+@layer utilities {
+
+    /*========= BUTTONS =========*/
+    .btn-book-online {
+        @apply button text-indigo-50 bg-custom-gradient-btn  border-indigo-50 z-[2]
+            
+    }
+    .btn-book-online-transparent {
+        @apply button text-indigo-900 bg-indigo-50 bg-opacity-45 border-2  border-indigo-50 z-[2]
+            
+    }
+
+    .transparent-btn {
+        @apply button text-indigo-400 bg-transparent  
+            border-indigo-400 z-[2]
+    }
+
+    .booking-btn {
+        @apply w-1/2 p-6 glass hover:bg-indigo-100 text-indigo-900 rounded-md cursor-pointer mt-6 text-2xl 
+            font-semibold text-left
+    }
+
+    /* ======== INPUTS ======== */
+    .input {
+        @apply w-[24vw] p-2.5 rounded-[8px] focus:outline focus:outline-2 focus:outline-indigo-500 text-[1rem] 
+            font-sans font-[400]
+    }
+
+    .title-h1 {
+        @apply text-indigo-900 font-[900] font-anybody
+            text-[2.2rem] 
+            md:text-[2.8rem] 
+            base:text-[3.3rem] 
+            lg-sm:text-[4.1rem] 
+            lg:text-[4rem] 
+            xl:text-[3rem] 
+            2xl:text-[3.8rem]
+            2xl-xl:text-[4.2rem]
+            3xl:text-[3.5rem]  
+            leading-[.9em]
+    }
+    .title-h2 {
+        @apply  text-indigo-900 font-bold font-anybody
+            text-[1.5rem] 
+            md:text-4xl 
+            lg-sm:text-[3.1rem]
+            xl:text-[2.8rem]
+            2xl:text-[3.4rem]
+            3xl-sm:text-[4rem]
+            3xl:text-[3rem] 
+            leading-[1em] 
+            lg-sm:leading-[1.1em]
+    }
+
+    .title-h3 {
+        @apply  text-indigo-900 font-bold font-anybody
+            text-[1.3rem]            
+            md:text-[1.5rem] 
+            base:text-[1.8rem]
+            lg-sm:text-[2rem]
+            lg:text-[2.2rem]
+            xl:text-[2.8rem]
+            2xl:text-6xl 
+            leading-[35px] 
+            xl:leading-[70px]   
+    }
+
+    .title-h4 {
+        @apply font-anybody text-zinc-50 font-[500] uppercase
+            text-[1.2rem]
+            lg-sm:text-[1.35rem]
+            xl:text-[1.5rem]
+    }
+
+    .title-h5 {
+        @apply font-anybody text-zinc-50 font-[500] uppercase
+            text-[1.2rem]
+            xl:text-[1.8rem]
+    }
+
+    .title-medium {
+        @apply font-bold tracking-wider font-anybody
+        text-2xl 
+        md:text-3xl 
+        xl-sm:text-[1.7rem]
+        xl:text-[2rem] 
+        xl-xl:text-[1.8rem]
+        2xl:text-[2.2rem]
+        3xl:text-[2.5rem]
+                                        
+    }
+
+    .title-sm {
+        @apply font-[600] tracking-wide font-anybody
+            text-[1.05rem]
+            xl:text-[1.26rem]
+            xl-xl:text-[1rem]
+            3xl:text-[1.26rem]
+    }
+
+}
