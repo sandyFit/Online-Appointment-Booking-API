@@ -3,7 +3,7 @@ import Button from '../components/buttons/Button';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from '../redux/alertReducer';
 
 const Login = () => {

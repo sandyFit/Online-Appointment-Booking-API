@@ -5,8 +5,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* HTML: <div class="loader"></div> */
-
+/* ===== LOADER ====== */
 .loader-parent {
     display: flex;
     justify-content: center;
@@ -35,6 +34,17 @@
   animation: l3 1s infinite linear;
 }
 @keyframes l3 {to{transform: rotate(1turn)}}
+
+/* GLASS EFFECT */
+.glass {
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: background-color 0.5s ease, box-shadow 0.5s ease, backdrop-filter 0.5s ease;
+}
+
 
 @layer base {
 
@@ -152,6 +162,41 @@
             xl:text-[1.26rem]
             xl-xl:text-[1rem]
             3xl:text-[1.26rem]
+    }
+
+    .dash-links {
+        @apply w-full flex gap-3 text-zinc-100 text-[.9rem] text-[800] p-4 pl-16 border-l-4 border-l-transparent
+            hover:bg-indigo-400 hover:border-l-4 hover:border-l-cyan-300 cursor-pointer uppercase
+             transition-all duration-300 ease-in-out
+    }
+
+    .dash-links-collapsed {
+        @apply w-full flex gap-3 text-zinc-100 text-[800] py-4 border-l-4 border-l-transparent p-4
+            hover:bg-indigo-400 hover:border-l-4 hover:border-l-cyan-300 cursor-pointer
+             transition-all duration-300 ease-in-out
+    }
+
+    .avatar-sm {
+        @apply w-24 h-24 bg-slate-400 hover:bg-slate-200 border-2 border-cyan-400 rounded-full
+            flex flex-col justify-center items-center mx-1 my-1 cursor-pointer
+    }
+
+    .avatar-img-sm {
+        @apply w-24 rounded-full border-2 border-cyan-400
+    }
+
+    .frame {
+        @apply flex w-12 h-12 bg-slate-300 rounded-full justify-center items-center
+    }
+
+    .sidebar {
+    @apply col-span-3 col-start-1 bg-indigo-500 row-span-6 row-start-1 rounded-[12px]
+           flex flex-col items-center pb-52 gap-16 pt-8 transition-all duration-300 ease-in-out;
+}
+
+    .collapsed-sidebar {
+        @apply col-span-1 col-start-1 bg-indigo-500 row-span-6 row-start-1 rounded-[12px]
+            flex flex-col justify-center items-center pb-52 gap-16 pt-8 transition-all duration-300 ease-in-out;
     }
 
 }
