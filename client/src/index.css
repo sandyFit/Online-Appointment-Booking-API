@@ -191,12 +191,12 @@
 
     .sidebar {
     @apply col-span-3 col-start-1 bg-indigo-500 row-span-6 row-start-1 rounded-[12px]
-           flex flex-col items-center pb-52 gap-16 pt-8 transition-all duration-300 ease-in-out;
+           flex flex-col items-center pb-52 pt-8 transition-all duration-300 ease-in-out;
 }
 
     .collapsed-sidebar {
         @apply col-span-1 col-start-1 bg-indigo-500 row-span-6 row-start-1 rounded-[12px]
-            flex flex-col justify-center items-center pb-52 gap-16 pt-8 transition-all duration-300 ease-in-out;
+            flex flex-col justify-center items-center pb-52 pt-8 transition-all duration-300 ease-in-out;
     }
 
 }

@@ -4,7 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { hideLoading, showLoading } from '../redux/alertReducer';
+import { hideLoading, showLoading } from '../redux/alertSlice';
 
 const Login = () => {
 
@@ -49,8 +49,13 @@ const Login = () => {
 
                 // LOCALSTORAGE
                 localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user_type', response.data.user.user_type); // Store userType in localStorage
+
+                // Redirect to homepage or wherever necessary
                 navigate('/');
-            } else {
+            }
+
+            else {
                 // Specific error handling based on response message
                 if (response.data.message === 'User not found') {
                     toast.error('No account found with that email address.');

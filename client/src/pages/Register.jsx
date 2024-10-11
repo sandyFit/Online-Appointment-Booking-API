@@ -4,7 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { hideLoading, showLoading } from '../redux/alertReducer';
+import { hideLoading, showLoading } from '../redux/alertSlice';
 
 
 const Register = () => {
