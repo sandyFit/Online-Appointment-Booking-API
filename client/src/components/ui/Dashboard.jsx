@@ -83,8 +83,8 @@ const Dashboard = ({ children }) => {
                         <div className="flex gap-2 items-center">
                             <div className="w-12 h-12 border-4 border-indigo-500 rounded-full"></div>
                             <div className="flex flex-col">
-                                <h3 className="text-[.9rem]">{user?.name}</h3>
-                                <p className="text-[.7rem]">{user?.title || "User"}</p> {/* Render user title or default to 'User' */}
+                                <h3 className="text-[.9rem]">{user?.username}</h3>
+                                <p className="text-[.7rem]">{user?.user_type || "User"}</p> {/* Render user title or default to 'User' */}
                             </div>
                         </div>
                     </div>

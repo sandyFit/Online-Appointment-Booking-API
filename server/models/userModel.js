@@ -3,37 +3,35 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 // Function to register a new user
-export const registerUser = async (req, res) => {
-    const { username, email, password, user_type } = req.body; // Ensure username is included
-
+export const registerUser = async ({ username, email, password, user_type }) => {
     try {
-        // Check if the user already exists
+        // Check if user already exists
         const existingUserQuery = 'SELECT * FROM users WHERE email = $1';
         const existingUserResult = await pool.query(existingUserQuery, [email]);
 
         if (existingUserResult.rows.length > 0) {
-            return res.status(400).json({ success: false, message: 'User already exists' });
+            return { success: false, message: 'User already exists' };
         }
 
         // Hash the password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Insert the new user into the database
+        // Insert new user
         const insertUserQuery = 'INSERT INTO users (username, email, password, user_type) VALUES ($1, $2, $3, $4) RETURNING *';
         const newUserResult = await pool.query(insertUserQuery, [username, email, hashedPassword, user_type]);
 
-        // Respond with the new user data
-        return res.status(201).json({
+        return {
             success: true,
             message: 'User registered successfully',
-            user: newUserResult.rows[0]
-        });
+            user: newUserResult.rows[0],
+        };
     } catch (error) {
         console.error('Error registering user:', error);
-        return res.status(500).json({ success: false, message: 'Error registering user' });
+        return { success: false, message: 'Error registering user' };
     }
 };
+
 
 
 // Function to find a user by email
@@ -69,11 +67,13 @@ export const verifyUserPassword = async (email, password) => {
         // Compare password with the hashed password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return { success: false, message: 'Incorrect password' }; // Provide a specific message for incorrect password
+            return { success: false, message: 'Incorrect user or password' }; // Provide a specific message for incorrect password
         }
 
         // Generate token
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign({ id: user.id, user_type: user.user_type },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' });
         
         return { success: true, message: 'Login successful', user, token };
     } catch (err) {

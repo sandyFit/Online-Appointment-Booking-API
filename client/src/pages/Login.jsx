@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from '../components/buttons/Button';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { hideLoading, showLoading } from '../redux/alertSlice';
+import { setUser, clearUser } from '../redux/userSlice'; // Import clearUser action
 
 const Login = () => {
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -27,10 +27,12 @@ const Login = () => {
         let loaderTimeout;
         e.preventDefault();
         console.log(`Form values being sent: ${JSON.stringify(formData)}`);
+
         try {
             loaderTimeout = setTimeout(() => {
-            dispatch(showLoading());
+                dispatch(showLoading());
             }, 300); // Show loader only if it takes longer than 300ms
+
             const response = await axios.post('http://localhost:5050/users/login', formData, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -40,6 +42,8 @@ const Login = () => {
             clearTimeout(loaderTimeout);
             dispatch(hideLoading());
 
+            // Log the response data to ensure it's correct
+            console.log('Login Response:', response.data);
 
             // Check if the response indicates success
             if (response.data.success) {
@@ -51,11 +55,20 @@ const Login = () => {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('user_type', response.data.user.user_type); // Store userType in localStorage
 
+                // Optional: Clear any existing user before setting new one
+                dispatch(clearUser()); // Clear previous user data
+
+                // Dispatch setUser action
+                dispatch(setUser({
+                    id: response.data.user.id,
+                    username: response.data.user.username,
+                    email: response.data.user.email,
+                    user_type: response.data.user.user_type // Include user_type
+                }));
+
                 // Redirect to homepage or wherever necessary
                 navigate('/');
-            }
-
-            else {
+            } else {
                 // Specific error handling based on response message
                 if (response.data.message === 'User not found') {
                     toast.error('No account found with that email address.');
@@ -72,16 +85,13 @@ const Login = () => {
         }
     };
 
-
-
-
     return (
         <section className='h-screen flex items-center justify-center bg-indigo-500'>
             <article className='bg-slate-300 w-[30vw] h-[70vh] rounded-[10px] relative'>
                 <div className="w-[18vw] bg-indigo-900 rounded-bl-lg py-2 absolute top-6 -left-6">
                     <h1 className='text-zinc-300 text-[1.6rem] font-[600] text-center'>Welcome Back</h1>
                 </div>  
-                
+
                 <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center mt-28 gap-6'>
                     <label htmlFor="email" className='flex flex-col title-sm uppercase text-indigo-900'>
                         Email
@@ -118,7 +128,6 @@ const Login = () => {
                             isSubmit={true} // Pass as true to indicate this is a submit button
                         />
                     </div>
-                    
                 </form>
 
                 <div className="flex justify-center items-center mt-6 text-indigo-900">
@@ -133,4 +142,3 @@ const Login = () => {
 }
 
 export default Login;
-

@@ -25,32 +25,39 @@ const Register = () => {
             [name]: value
         }));
     };
+    console.log(`Updated formData: ${JSON.stringify(formData)}`);
+
+
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(`Form values: ${JSON.stringify(formData)}`);
+    e.preventDefault();
+    console.log(`Form values before submit: ${JSON.stringify(formData)}`);
 
-        try {
-            dispatch(showLoading());
-            const response = await axios.post('http://localhost:5050/users/register', formData);
-            dispatch(hideLoading());
+    try {
+        dispatch(showLoading());
+        const response = await axios.post('http://localhost:5050/users/register', formData, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        dispatch(hideLoading());
 
-            if (response.data.success) {
-                console.log(response.data.message)
-                toast.success(response.data.message);
-                toast('Redirecting to Login page');
-                navigate('/login');
-            }
-            else {
-                console.log(response.data.message)
-                toast.error(response.data.message);
-            }
-        } catch (error) {
-            console.log('Something went wrong');
-            dispatch(hideLoading());
-            toast.error('Something went wrong');
+        if (response.data.success) {
+            console.log(response.data.message);
+            toast.success(response.data.message);
+            toast('Redirecting to Login page');
+            navigate('/login');
+        } else {
+            console.log(response.data.message);
+            toast.error(response.data.message);
         }
-    };
+    } catch (error) {
+        console.log('Something went wrong:', error.response?.data || error.message);
+        dispatch(hideLoading());
+        toast.error('Something went wrong');
+    }
+};
+
 
 
     return (
