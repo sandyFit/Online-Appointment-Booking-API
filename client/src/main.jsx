@@ -14,6 +14,7 @@ import PublicRoute from './routes/PublicRoute.jsx';
 import Dashboard from './components/ui/Dashboard.jsx';
 import Loader from './components/ui/Loader.jsx'; // Assuming you moved Loader to a separate component
 import RegisterDoctor from './pages/RegisterDoctor.jsx';
+import RegisterPatient from './pages/RegisterPatient.jsx';
 
 const container = document.getElementById('root');
 const root = createRoot(container); // Create the root once here
@@ -27,6 +28,7 @@ root.render(
         <Route path="/" element={<App />}>
           <Route index element={<ProtectedRoutes><Home /></ProtectedRoutes>} />
           <Route path='/register-doctor' element={<ProtectedRoutes><RegisterDoctor /></ProtectedRoutes>} />
+          <Route path='/register-patient' element={<ProtectedRoutes><RegisterPatient /></ProtectedRoutes>} />
         </Route>
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />

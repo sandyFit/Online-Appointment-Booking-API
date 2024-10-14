@@ -83,8 +83,8 @@
     }
 
     .transparent-btn {
-        @apply button text-indigo-400 bg-transparent  
-            border-indigo-400 z-[2]
+        @apply button text-indigo-700 bg-transparent  
+            border-indigo-700 z-[2]
     }
 
     .booking-btn {

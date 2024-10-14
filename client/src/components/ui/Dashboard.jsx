@@ -20,7 +20,7 @@ const Dashboard = ({ children }) => {
     // Define menu items for different user types
     const userItems = [
         { to: '/', icon: <AiOutlineHome className='text-[1.3rem]' />, label: 'Home' },
-        { to: '/register-doctor', icon: <MdOutlineSwitchAccount className='text-[1.3rem]' />, label: 'New Doctor Registration' },
+        { to: '/register-patient', icon: <AiOutlineHome className='text-[1.3rem]' />, label: 'Add a new Patient' },        
         { to: '/appointments', icon: <AiOutlineCalendar className='text-[1.3rem]' />, label: 'Manage Appointments' },
         { to: '/doc-profile', icon: <AiOutlineUser className='text-[1.3rem]' />, label: 'Edit Profile' },
     ];
@@ -28,6 +28,7 @@ const Dashboard = ({ children }) => {
     const adminItems = [
         { to: '/', icon: <AiOutlineHome className='text-[1.3rem]' />, label: 'Admin Home' },
         { to: '/users', icon: <AiOutlineUser className='text-[1.3rem]' />, label: 'Manage Users' },
+        { to: '/register-doctor', icon: <MdOutlineSwitchAccount className='text-[1.3rem]' />, label: 'New Doctor Registration' },
         { to: '/doctors', icon: <MdOutlineSwitchAccount className='text-[1.3rem]' />, label: 'Manage Doctors' },
         { to: '/admin-profile', icon: <AiOutlineUser className='text-[1.3rem]' />, label: 'Admin Profile' },
     ];
@@ -92,7 +93,7 @@ const Dashboard = ({ children }) => {
 
                 {/* Main Content */}
                 <main className={`glass row-span-5 rounded-[12px] 
-                    ${isCollapsed ? 'col-span-11 col-start-2' : 'col-span-9 col-start-4'} p-12`}>
+                    ${isCollapsed ? 'col-span-11 col-start-2' : 'col-span-9 col-start-4'} px-12`}>
                     {children}
                 </main>
             </div>

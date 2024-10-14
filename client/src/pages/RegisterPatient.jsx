@@ -4,18 +4,15 @@ import Dashboard from '../components/ui/Dashboard';
 import { TimePicker } from "antd";
 import Button from '../components/buttons/Button';
 
-const RegisterDoctor = () => {
+const RegisterPatient = () => {
     return (
         <Dashboard>
             <h1 className='title-h5 uppercase text-indigo-900 text-center mt-4'>
-                new doctor registration
+                Add a new patient
             </h1>
             <hr className='border-t-[1px] border-slate-400' />
             <section className="flex justify-center items-center">
-                <form className='flex flex-col gap-3 mt-6 '>
-                    <h2 className='title-sm uppercase text-indigo-900'>
-                        Personal Information
-                    </h2>
+                <form className='flex flex-col gap-6 mt-12'>
                     <div className="flex gap-8">
                         <label 
                             htmlFor="firstName" className='title-xsm text-indigo-900 flex flex-col uppercase'>
@@ -64,18 +61,22 @@ const RegisterDoctor = () => {
                                 className='input w-[20vw]'
                             />
                         </label>
-                        
-                    </div>
 
-                    <hr className='border-t-[1px] border-slate-400 mt-3' />
+                        <label 
+                            htmlFor="visit_type" className='title-xsm text-indigo-900 flex flex-col uppercase'>
+                            Type of Visit
+                            <input type="text"
+                                name='visit_type'
+                                id='visit_type'
+                                placeholder='Enter type of visit'
+                                required
+                                className='input w-[20vw]'
+                            />
+                        </label>
 
-                    <h2 className='title-sm uppercase text-indigo-900 mt-3'>
-                        Profesional Information
-                    </h2>
-                    <div className="flex gap-8">
                         <label 
                             htmlFor="firstName" className='title-xsm text-indigo-900 flex flex-col uppercase'>
-                            Specialty
+                            Date of Birdth
                             <input type="text"
                                 name='firstName'
                                 id='firstName'
@@ -84,23 +85,22 @@ const RegisterDoctor = () => {
                                 className='input w-[20vw]'
                             />
                         </label>
+                        
+                    </div>
+                    <div className="flex">
                         <label 
-                            htmlFor="lastName" className='title-xsm text-indigo-900 flex flex-col uppercase'>
-                            Experience
-                            <input type="number"
-                                name='lastName'
-                                id='lastName'
-                                placeholder='Enter years of experience'
+                            htmlFor="treatment" className='title-xsm text-indigo-900 flex flex-col uppercase'>
+                            Treatment
+                            <input type="text"
+                                name='treatment'
+                                id='treatment'
+                                placeholder="Enter patient's treatment"
                                 required
                                 className='input w-[20vw]'
                             />
                         </label>
-                        <label 
-                            htmlFor="email" className='title-xsm text-indigo-900 flex flex-col uppercase'>
-                            Consultation Times
-                            <TimePicker.RangePicker/>
-                        </label>
                     </div>
+                              
 
                     <div className="flex justify-end">
                         <div className='btn-book-online h-12 md:h-[3.6rem] base:h-[3.8rem] lg:h-[3.4rem] px-8 md:px-10 
@@ -121,4 +121,4 @@ const RegisterDoctor = () => {
     )
 }
 
-export default RegisterDoctor
+export default RegisterPatient;
