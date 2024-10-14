@@ -45,6 +45,12 @@
     transition: background-color 0.5s ease, box-shadow 0.5s ease, backdrop-filter 0.5s ease;
 }
 
+.ant-picker {
+    padding: 10px !important;
+    border: none !important;
+    width: 20vw !important;
+}
+
 
 @layer base {
 
@@ -88,9 +94,12 @@
 
     /* ======== INPUTS ======== */
     .input {
-        @apply w-[24vw] p-2.5 rounded-[8px] focus:outline focus:outline-2 focus:outline-indigo-500 text-[1rem] 
+        @apply  p-2.5 rounded-[5px] focus:outline focus:outline-2 focus:outline-indigo-500 text-[1rem] 
             font-sans font-[400]
     }
+
+   
+
 
     .title-h1 {
         @apply text-indigo-900 font-[900] font-anybody
@@ -139,7 +148,7 @@
     }
 
     .title-h5 {
-        @apply font-anybody text-zinc-50 font-[500] uppercase
+        @apply font-anybody  font-[500] uppercase
             text-[1.2rem]
             xl:text-[1.8rem]
     }
@@ -162,6 +171,14 @@
             xl:text-[1.26rem]
             xl-xl:text-[1rem]
             3xl:text-[1.26rem]
+    }
+
+    .title-xsm {
+        @apply font-[600] tracking-wide font-anybody
+            text-[.78rem]
+            xl:text-[.8rem]
+            xl-xl:text-[.9rem]
+            
     }
 
     .dash-links {

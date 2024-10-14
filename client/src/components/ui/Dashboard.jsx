@@ -20,9 +20,9 @@ const Dashboard = ({ children }) => {
     // Define menu items for different user types
     const userItems = [
         { to: '/', icon: <AiOutlineHome className='text-[1.3rem]' />, label: 'Home' },
-        { to: '/appointments', icon: <AiOutlineCalendar className='text-[1.3rem]' />, label: 'Appointments' },
-        { to: '/apply-doctor', icon: <MdOutlineSwitchAccount className='text-[1.3rem]' />, label: 'Apply Doctor' },
-        { to: '/doc-profile', icon: <AiOutlineUser className='text-[1.3rem]' />, label: 'Profile' },
+        { to: '/register-doctor', icon: <MdOutlineSwitchAccount className='text-[1.3rem]' />, label: 'New Doctor Registration' },
+        { to: '/appointments', icon: <AiOutlineCalendar className='text-[1.3rem]' />, label: 'Manage Appointments' },
+        { to: '/doc-profile', icon: <AiOutlineUser className='text-[1.3rem]' />, label: 'Edit Profile' },
     ];
 
     const adminItems = [
@@ -92,7 +92,7 @@ const Dashboard = ({ children }) => {
 
                 {/* Main Content */}
                 <main className={`glass row-span-5 rounded-[12px] 
-                    ${isCollapsed ? 'col-span-11 col-start-2' : 'col-span-9 col-start-4'}`}>
+                    ${isCollapsed ? 'col-span-11 col-start-2' : 'col-span-9 col-start-4'} p-12`}>
                     {children}
                 </main>
             </div>

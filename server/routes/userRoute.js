@@ -36,6 +36,7 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     const result = await verifyUserPassword(email, password);
+
     if (result.success) {
         return res.status(200).json({
             success: true,

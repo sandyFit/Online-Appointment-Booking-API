@@ -78,7 +78,7 @@ const Register = () => {
                                 id="username" 
                                 placeholder="Enter your username"
                                 required
-                                className='input'
+                                className='input w-[24vw]'
                                 value={formData.username}
                                 onChange={handleChange}
                             />
@@ -92,7 +92,7 @@ const Register = () => {
                                 id="email" 
                                 placeholder="john.doe@company.com"
                                 required
-                                className='input'
+                                className='input w-[24vw]'
                                 value={formData.email}
                                 onChange={handleChange}
                             />
@@ -107,7 +107,7 @@ const Register = () => {
                                 type="password" 
                                 name="password" 
                                 id="password" 
-                                className='input'
+                                className='input w-[24vw]'
                                 value={formData.password}
                                 onChange={handleChange}
                             />
@@ -118,7 +118,7 @@ const Register = () => {
                             <select 
                                 name="user_type" // Changed to match the state
                                 id="user_type" 
-                                className='input'
+                                className='input w-[24vw]'
                                 value={formData.user_type}
                                 onChange={handleChange}
                             >

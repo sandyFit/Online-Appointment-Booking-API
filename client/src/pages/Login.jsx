@@ -101,7 +101,7 @@ const Login = () => {
                             id="email" 
                             placeholder="john.doe@company.com"
                             required
-                            className='input'
+                            className='input w-[24vw]'
                             value={formData.email}
                             onChange={handleChange}
                         />
@@ -113,7 +113,7 @@ const Login = () => {
                             type="password" 
                             name="password" 
                             id="password" 
-                            className='input'
+                            className='input w-[24vw]'
                             value={formData.password}
                             onChange={handleChange}
                         />
