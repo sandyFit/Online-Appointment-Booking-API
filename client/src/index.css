@@ -51,6 +51,13 @@
     width: 20vw !important;
 }
 
+.ant-table-cell  {
+    color: #312e81 !important;
+
+}
+.ant-btn {
+    text-transform: uppercase !important;
+}
 
 @layer base {
 

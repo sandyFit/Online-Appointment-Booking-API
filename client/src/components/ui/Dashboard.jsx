@@ -3,9 +3,12 @@ import Logo from './Logo';
 import { AiOutlineHome, AiOutlineCalendar, AiOutlineUser, AiOutlineLogout, AiOutlineClose } from "react-icons/ai";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { MdOutlineSwitchAccount } from "react-icons/md";
+import { LiaUsersCogSolid } from "react-icons/lia";
+import { LuCalendarSearch } from "react-icons/lu";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 
 const Dashboard = ({ children }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -20,8 +23,9 @@ const Dashboard = ({ children }) => {
     // Define menu items for different user types
     const userItems = [
         { to: '/', icon: <AiOutlineHome className='text-[1.3rem]' />, label: 'Home' },
-        { to: '/register-patient', icon: <AiOutlineHome className='text-[1.3rem]' />, label: 'Add a new Patient' },        
-        { to: '/appointments', icon: <AiOutlineCalendar className='text-[1.3rem]' />, label: 'Manage Appointments' },
+        // { to: '/register-patient', icon: <LiaUsersCogSolid className='text-[1.3rem]' />, label: 'Add a new Patient' },        
+        { to: '/manage-patients', icon: <LiaUsersCogSolid className='text-[1.3rem]' />, label: 'Manage Patients' },        
+        { to: '/appointments', icon: <LuCalendarSearch className='text-[1.3rem]' />, label: 'Manage Appointments' },
         { to: '/doc-profile', icon: <AiOutlineUser className='text-[1.3rem]' />, label: 'Edit Profile' },
     ];
 
