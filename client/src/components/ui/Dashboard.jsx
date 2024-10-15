@@ -23,7 +23,6 @@ const Dashboard = ({ children }) => {
     // Define menu items for different user types
     const userItems = [
         { to: '/', icon: <AiOutlineHome className='text-[1.3rem]' />, label: 'Home' },
-        // { to: '/register-patient', icon: <LiaUsersCogSolid className='text-[1.3rem]' />, label: 'Add a new Patient' },        
         { to: '/manage-patients', icon: <LiaUsersCogSolid className='text-[1.3rem]' />, label: 'Manage Patients' },        
         { to: '/appointments', icon: <LuCalendarSearch className='text-[1.3rem]' />, label: 'Manage Appointments' },
         { to: '/doc-profile', icon: <AiOutlineUser className='text-[1.3rem]' />, label: 'Edit Profile' },
@@ -32,8 +31,7 @@ const Dashboard = ({ children }) => {
     const adminItems = [
         { to: '/', icon: <AiOutlineHome className='text-[1.3rem]' />, label: 'Admin Home' },
         { to: '/users', icon: <AiOutlineUser className='text-[1.3rem]' />, label: 'Manage Users' },
-        { to: '/register-doctor', icon: <MdOutlineSwitchAccount className='text-[1.3rem]' />, label: 'New Doctor Registration' },
-        { to: '/doctors', icon: <MdOutlineSwitchAccount className='text-[1.3rem]' />, label: 'Manage Doctors' },
+        { to: '/manage-doctors', icon: <MdOutlineSwitchAccount className='text-[1.3rem]' />, label: 'Manage Doctors' },
         { to: '/admin-profile', icon: <AiOutlineUser className='text-[1.3rem]' />, label: 'Admin Profile' },
     ];
 

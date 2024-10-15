@@ -8,24 +8,24 @@ import { FiDelete } from "react-icons/fi";
 
 const dataSource = [
     {
-        
+        key: '01',
         first_name: 'Nathan',
         last_name: 'Roberts',
         phone: '3334445656',
-        email: 'drroberts@radiantstudio.com',
+        email: 'drroberts@radiant.com',
         specialty: 'Dental Therapist',
-        experience: '12',
+        experience: 12,
         available_hours: "09:00:00-18:00:00"
     },
     {
-        
-        first_name: 'Sarah',
-        last_name: 'Klein',
+        key: '02',
+        first_name: 'Karim',
+        last_name: 'Asouza',
         phone: '3334445656',
-        email: 'sarah@gmail.com',
-        visit_type: 'Follow Up',
-        date_of_birth: '2002-06-12',
-        treatment: 'Teeth Whitening'
+        email: 'drasouza@radiant.com',
+        specialty: 'Dental Therapist',
+        experience: 6,
+        available_hours: "09:00:00-18:00:00"
     },
 ];
 
@@ -52,19 +52,19 @@ const columns = [
         key: 'email',
     },
     {
-        title: 'Type of visit',
-        dataIndex: 'visit_type',
-        key: 'visit_type',
+        title: 'Specialty',
+        dataIndex: 'specialty',
+        key: 'specialty',
     },
     {
-        title: 'Date of Birth',
-        dataIndex: 'date_of_birth',
-        key: 'date_of_birth',
+        title: 'Experience',
+        dataIndex: 'experience',
+        key: 'experience',
     },
     {
-        title: 'Treatment',
-        dataIndex: 'treatment',
-        key: 'treatment',
+        title: 'Consultation Times',
+        dataIndex: 'available_hours',
+        key: 'available_hours',
     },
     {
         title: 'Action',

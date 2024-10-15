@@ -79,7 +79,9 @@ const Login = () => {
                 }
             }
         } catch (error) {
-            console.error('Error details:', error);
+            console.log('Response data:', error.response.data);
+            console.log('Response status:', error.response.status);
+            console.log('Response headers:', error.response.headers);
             dispatch(hideLoading());
             toast.error('An error occurred while processing your request. Please try again later.');
         }

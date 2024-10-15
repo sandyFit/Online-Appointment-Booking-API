@@ -93,7 +93,10 @@ export const registerDoctor = async ({
             user_id
         ]);
 
-        const adminUserId = 1; // Assuming admin has a fixed user_id (you can fetch this dynamically)
+        // Retrieve admin user ID dynamically
+        const adminQuery = 'SELECT id FROM users WHERE user_type = $1';
+        const adminResult = await pool.query(adminQuery, ['admin']);
+        const adminUserId = adminResult.rows[0]?.id;
         const notificationMessage = `New doctor ${first_name} ${last_name} registered.`;
 
         const insertNotificationQuery = `

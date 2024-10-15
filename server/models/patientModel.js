@@ -40,12 +40,12 @@ export const registerPatient = async ({
         ]);
 
         // Retrieve admin user ID dynamically
-        const adminQuery = 'SELECT id FROM users WHERE role = $1';
+        const adminQuery = 'SELECT id FROM users WHERE user_type = $1';
         const adminResult = await pool.query(adminQuery, ['admin']);
         const adminUserId = adminResult.rows[0]?.id;
 
         // Retrieve doctor user ID dynamically
-        const doctorQuery = 'SELECT id FROM users WHERE role = $1 AND email = $2';
+        const doctorQuery = 'SELECT id FROM users WHERE user_type = $1 AND email = $2';
         const doctorResult = await pool.query(doctorQuery, ['doctor', email]); // Ensure email is the correct identifier
         const doctorUserId = doctorResult.rows[0]?.id;
 

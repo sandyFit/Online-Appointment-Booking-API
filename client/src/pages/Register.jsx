@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { hideLoading, showLoading } from '../redux/alertSlice';
+import { setUserIdToRegister } from '../redux/userSlice'; 
 
 
 const Register = () => {
@@ -30,33 +31,39 @@ const Register = () => {
 
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(`Form values before submit: ${JSON.stringify(formData)}`);
+        e.preventDefault();
+        console.log(`Form values before submit: ${JSON.stringify(formData)}`);
 
-    try {
-        dispatch(showLoading());
-        const response = await axios.post('http://localhost:5050/users/register', formData, {
-            headers: {
-                'Content-Type': 'application/json',
+        try {
+            dispatch(showLoading());
+            const response = await axios.post('http://localhost:5050/users/register', formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            dispatch(hideLoading());
+
+            if (response.data.success) {
+                const userId = response.data.user?.id;  // Safely access user.id
+                if (userId) {
+                    console.log('User ID retrieved after registration:', userId);
+                    dispatch(setUserIdToRegister(userId));  // Dispatch user_id to Redux
+                    toast.success('User registered successfully');
+                    navigate('/login');
+                } else {
+                    console.error('User ID is missing from the registration response.');
+                }
+            } else {
+                console.log(response.data.message);
+                toast.error(response.data.message);
             }
-        });
-        dispatch(hideLoading());
-
-        if (response.data.success) {
-            console.log(response.data.message);
-            toast.success(response.data.message);
-            toast('Redirecting to Login page');
-            navigate('/login');
-        } else {
-            console.log(response.data.message);
-            toast.error(response.data.message);
+        } catch (error) {
+            console.log('Something went wrong:', error.response?.data || error.message);
+            dispatch(hideLoading());
+            toast.error('Something went wrong');
         }
-    } catch (error) {
-        console.log('Something went wrong:', error.response?.data || error.message);
-        dispatch(hideLoading());
-        toast.error('Something went wrong');
-    }
-};
+    };
+
 
 
 

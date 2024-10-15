@@ -8,7 +8,7 @@ import { FiDelete } from "react-icons/fi";
 
 const dataSource = [
     {
-        
+        key: '1',
         first_name: 'Mike',
         last_name: 'Mayers',
         phone: '3334445656',
@@ -18,7 +18,7 @@ const dataSource = [
         treatment: 'Cavities'
     },
     {
-        
+        KEY: '2',
         first_name: 'Sarah',
         last_name: 'Klein',
         phone: '3334445656',

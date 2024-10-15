@@ -31,8 +31,6 @@ router.post('/register-doctor', [
         user_id
     } = req.body;
 
-    console.log("Request Body:", req.body);
-
     try {
         const result = await registerDoctor({
             first_name,
