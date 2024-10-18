@@ -23,6 +23,7 @@ const RegisterDoctor = () => {
         specialty: '',
         experience: '',
         available_hours: '',
+        
     });
 
     // Example: Set user_id for the doctor to be registered (this should come from your user creation logic)
@@ -58,14 +59,17 @@ const RegisterDoctor = () => {
         e.preventDefault();
 
         const doctorData = { 
-            ...newDoctor, 
-            user_id: userId // This must be the user ID for the doctor
-        };
+        ...newDoctor, 
+        user_id: userId // This must be the user ID for the doctor
+    };
 
+
+        // Add validation for userId here if necessary
         if (!userId) {
-            console.error("User ID to register as doctor is missing.");
+            toast.error('User ID is required to register a doctor.');
             return;
         }
+        console.log("Register Doctor data:", doctorData); 
 
         try {
             dispatch(showLoading());

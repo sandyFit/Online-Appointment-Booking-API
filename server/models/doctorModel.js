@@ -11,7 +11,7 @@ export const registerDoctor = async ({
     available_hours,
     user_id
 }) => {
-    try {
+    try {   
         // Check if doctor already exists
         const existingDoctorQuery = 'SELECT * FROM doctors WHERE email = $1';
         const existingDoctorResult = await pool.query(existingDoctorQuery, [email]);
@@ -92,7 +92,7 @@ export const registerDoctor = async ({
             endTimestamp,
             user_id
         ]);
-
+        console.log("User ID in registerDoctor:", user_id);
         // Retrieve admin user ID dynamically
         const adminQuery = 'SELECT id FROM users WHERE user_type = $1';
         const adminResult = await pool.query(adminQuery, ['admin']);

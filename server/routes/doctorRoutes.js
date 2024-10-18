@@ -16,6 +16,7 @@ router.post('/register-doctor', [
     body('user_id').notEmpty().withMessage('User ID is required'),
 ], async (req, res) => {
     const errors = validationResult(req); // Check for validation errors
+
     if (!errors.isEmpty()) {
         return res.status(400).json({ success: false, errors: errors.array() });
     }
@@ -30,6 +31,8 @@ router.post('/register-doctor', [
         available_hours,
         user_id
     } = req.body;
+
+    console.log("Request Body for Doctor Registration:", req.body);
 
     try {
         const result = await registerDoctor({
