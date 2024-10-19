@@ -2,6 +2,33 @@ import pool from '../config/database.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+
+// ***** UTILITY FUNCTION TO QUERY USERS *******
+const queryUser = async (condition, params) => {
+    try {
+        const query = `SELECT * FROM users WHERE ${condition}`;
+        const result = await pool.query(query, params);
+
+        if (result.rows.length === 0) {
+            return {
+                success: false,
+                message: 'User not found'
+            }
+        }
+        return {
+            success: true,
+            user: result.rows[0]
+        }
+    } catch (error)
+    {
+        console.error('Error querying user', error);
+        return {
+            success: false,
+            message: 'Error querying user' + error.message
+        }
+    }
+};
+
 // Function to register a new user
 export const registerUser = async ({ username, email, password, user_type }) => {
     try {
@@ -18,7 +45,8 @@ export const registerUser = async ({ username, email, password, user_type }) => 
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // Insert new user
-        const insertUserQuery = 'INSERT INTO users (username, email, password, user_type) VALUES ($1, $2, $3, $4) RETURNING *';
+        const insertUserQuery = `INSERT INTO users (username, email, password, user_type) 
+                                VALUES ($1, $2, $3, $4) RETURNING *`;
         const newUserResult = await pool.query(insertUserQuery, [username, email, hashedPassword, user_type]);
 
         return {
@@ -28,13 +56,14 @@ export const registerUser = async ({ username, email, password, user_type }) => 
         };
     } catch (error) {
         console.error('Error registering user:', error);
-        return { success: false, message: 'Error registering user' };
+        return {
+            success: false,
+            message: 'Error registering user' + error.message
+        };
     }
 };
 
 
-
-// Function to find a user by email
 export const findUserByEmail = async (email) => {
     try {
         const userQuery = 'SELECT * FROM users WHERE email = $1';
@@ -45,14 +74,16 @@ export const findUserByEmail = async (email) => {
         }
 
         return { success: true, user: userResult.rows[0] };
-    } catch (err) {
-        console.error('Error finding user by email:', err.stack);
-        return { success: false, message: 'Error finding user' };
+    } catch (error) {
+        console.error('Error finding user by email:', error.stack);
+        return {
+            success: false,
+            message: 'Error finding user' + error.message
+        };
     }
 };
 
 
-// Function to verify user password
 export const verifyUserPassword = async (email, password) => {
     try {
         // Find user by email
@@ -67,34 +98,39 @@ export const verifyUserPassword = async (email, password) => {
         // Compare password with the hashed password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return { success: false, message: 'Incorrect user or password' }; // Provide a specific message for incorrect password
+            return { success: false, message: 'Incorrect user or password' }; 
         }
 
         // Generate token
-        const token = jwt.sign({ id: user.id, user_type: user.user_type },
-            process.env.JWT_SECRET,
-            { expiresIn: '1d' });
+        const token = jwt.sign(
+            { id: user.id, user_type: user.user_type },  // Optionally include 'user_type'
+            process.env.JWT_SECRET, 
+            { expiresIn: '1d' }
+        ); 
         
-        return { success: true, message: 'Login successful', user, token };
-    } catch (err) {
-        console.error('Error verifying user password:', err.stack);
-        return { success: false, message: 'Error verifying password' };
+        return {
+            success: true,
+            message: 'Login successful',
+            user: {
+                id: user.id,               
+                user_type: user.user_type
+            },
+            token            
+        };
+    } catch (error) {
+        console.error('Error verifying user:', error.stack);
+        return {
+            success: false,
+            message: 'Error verifying user' + error.message
+        };
     }
 };
 
 // Function to get user by ID
 export const getUserById = async (userId) => {
-    try {
-        const userQuery = 'SELECT * FROM users WHERE id = $1';
-        const userResult = await pool.query(userQuery, [userId]);
-
-        if (userResult.rows.length === 0) {
-            return { success: false, message: 'User does not exist' };
-        }
-
-        return { success: true, user: userResult.rows[0] };
-    } catch (error) {
-        console.error('Error getting user by ID:', error);
-        return { success: false, message: 'Error getting user', error };
-    }
+    return queryUser('id=$1', [userId]);
 };
+
+
+
+

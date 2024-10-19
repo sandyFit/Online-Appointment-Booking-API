@@ -13,7 +13,6 @@ router.post('/register-doctor', [
     body('specialty').notEmpty().withMessage('Specialty is required'),
     body('experience').isInt().withMessage('Experience must be a number'),
     body('available_hours').notEmpty().withMessage('Available hours are required'),
-    body('user_id').notEmpty().withMessage('User ID is required'),
 ], async (req, res) => {
     const errors = validationResult(req); // Check for validation errors
 
@@ -28,8 +27,7 @@ router.post('/register-doctor', [
         email,
         specialty,
         experience,
-        available_hours,
-        user_id
+        available_hours
     } = req.body;
 
     console.log("Request Body for Doctor Registration:", req.body);
@@ -43,7 +41,6 @@ router.post('/register-doctor', [
             specialty,
             experience,
             available_hours,
-            user_id
         });
         
         if (result.success) {

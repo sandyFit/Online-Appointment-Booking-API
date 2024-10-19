@@ -42,10 +42,10 @@ router.post('/login', async (req, res) => {
             success: true,
             message: result.message,
             user: {
-                id: result.user.id, // Use result.user.id
+                id: result.user.id, 
                 username: result.user.username,
                 email: result.user.email,
-                user_type: result.user.user_type // Include user_type in response
+                user_type: result.user.user_type 
             },
             token: result.token // Include the generated token
         });
@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
 // PROTECTED ROUTE to get user info by ID
 router.post('/get-user-by-id', authMiddleware, async (req, res) => {
     try {
-        const userId = req.userId; // Use the decoded ID from the token
+        const userId = req.user.id;
         const result = await getUserById(userId);
 
         if (!result.success) {

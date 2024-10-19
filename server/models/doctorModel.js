@@ -11,8 +11,24 @@ export const registerDoctor = async ({
     available_hours,
     user_id
 }) => {
-    try {   
-        // Check if doctor already exists
+    try
+    {   
+        // IF user_id IS NOT PROVIDED, GET IT BASED ON THE EMAIL
+        if (!user_id)
+        {
+            const userQuery = `SELECT id FROM users WHERE email = $1`;
+            const userResult = await pool.query(userQuery, [email]);
+
+            if (userResult.rows.length === 0) {
+                return {
+                    success: false,
+                    message: 'User not found with this email'
+                }
+            }
+            user_id = userResult.rows[0].id; // USING THE FOUND user_id
+        }
+
+        // CHECK IF DOCTOR ALREADY EXISTS
         const existingDoctorQuery = 'SELECT * FROM doctors WHERE email = $1';
         const existingDoctorResult = await pool.query(existingDoctorQuery, [email]);
 
@@ -20,7 +36,7 @@ export const registerDoctor = async ({
             return { success: false, message: 'Doctor already exists' };
         }
 
-        // Validate available_hours input (expected format: "HH:mm:ss-HH:mm:ss")
+        // VALIDATE AVAILABLE HOURS INPUT (expected format: "HH:mm:ss-HH:mm:ss")
         const availableHoursArray = available_hours.split('-').map(time => time.trim());
         const startHour = moment(availableHoursArray[0], 'HH:mm:ss').format('HH:mm:ss');
         const endHour = moment(availableHoursArray[1], 'HH:mm:ss').format('HH:mm:ss');
@@ -29,10 +45,10 @@ export const registerDoctor = async ({
             const openingTime = moment('08:00:00', 'HH:mm:ss');
             const closingTime = moment('18:00:00', 'HH:mm:ss');
 
-            const startMoment = moment(start, 'HH:mm:ss', true); // strict parsing
-            const endMoment = moment(end, 'HH:mm:ss', true); // strict parsing
+            const startMoment = moment(start, 'HH:mm:ss', true); // STRICT PARSING
+            const endMoment = moment(end, 'HH:mm:ss', true); // STRICT PARSING
 
-            // Check for valid times
+            // CHECK FOR VALID TIMES
             if (!startMoment.isValid() || !endMoment.isValid()) {
                 return {
                     valid: false,
@@ -66,14 +82,14 @@ export const registerDoctor = async ({
             };
         }
 
-        // Get the current date to create timestamps
+        // GET THE CURRENT DATE TO CREATE TIMESTAMPS
         const currentDate = moment().format('YYYY-MM-DD');
 
-        // Create full timestamps for the available hours
+        // CREATE FULL TIMESTAMPS FOR THE AVAILABLE HOURS
         const startTimestamp = `${currentDate} ${startHour}`;
         const endTimestamp = `${currentDate} ${endHour}`;
 
-        // Use the full timestamps for the tsrange in the SQL query
+        // USE THE FULL TIMESTAMPS FOR THE TSRANGE IN THE SQL QUERY 
         const insertDoctorQuery = `
             INSERT INTO doctors (
                 first_name, last_name, phone, email, specialty, experience, available_hours, user_id
@@ -93,18 +109,22 @@ export const registerDoctor = async ({
             user_id
         ]);
         console.log("User ID in registerDoctor:", user_id);
-        // Retrieve admin user ID dynamically
+        // RETRIEVE ADMIN USER ID DYNAMICALLY
         const adminQuery = 'SELECT id FROM users WHERE user_type = $1';
         const adminResult = await pool.query(adminQuery, ['admin']);
-        const adminUserId = adminResult.rows[0]?.id;
-        const notificationMessage = `New doctor ${first_name} ${last_name} registered.`;
-
-        const insertNotificationQuery = `
-            INSERT INTO notifications (user_id, message) 
-            VALUES ($1, $2)
-        `;
-        await pool.query(insertNotificationQuery, [adminUserId, notificationMessage]);
-
+        
+        // CHECK IF ADMIN EXISTS
+        if (adminResult.rows.length === 0) {
+            console.warn('No admin found to notify');
+        } else {
+            const adminUserId = adminResult.rows[0]?.id;
+            const notificationMessage = `New doctor ${first_name} ${last_name} registered.`;
+            const insertNotificationQuery = `
+                INSERT INTO notifications (user_id, message) 
+                VALUES ($1, $2)
+            `;
+            await pool.query(insertNotificationQuery, [adminUserId, notificationMessage]);
+        }
         return {
             success: true,
             message: 'Doctor registered successfully',
@@ -113,11 +133,14 @@ export const registerDoctor = async ({
     } catch (error) {
         console.error('Error registering doctor:', error);
 
-        // Capture specific errors if possible, like unique constraint violations
+        // CAPTURE SPECIFIC ERRORS IF POSSIBLE, LIKE UNIQUE CONSTRAINT VIOLATIONS 
         if (error.code === '23505') {
             return { success: false, message: 'Email already in use' };
         }
 
-        return { success: false, message: 'Error registering doctor: ' + error.message };
+        return {
+            success: false,
+            message: 'Error registering doctor: ' + error.message
+        };
     }
 };
