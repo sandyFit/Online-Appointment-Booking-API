@@ -13,7 +13,7 @@ import ProtectedRoutes from './routes/ProtectedRoutes.jsx';
 import PublicRoute from './routes/PublicRoute.jsx';
 import Dashboard from './components/ui/Dashboard.jsx';
 import Loader from './components/ui/Loader.jsx'; // Assuming you moved Loader to a separate component
-import RegisterDoctor from './pages/RegisterDoctor.jsx';
+import RegisterDoc from './pages/RegisterDoc.jsx';
 import RegisterPatient from './pages/RegisterPatient.jsx';
 import ManageDoctors from './pages/ManageDoctors.jsx';
 import ManagePatients from './pages/ManagePatients.jsx';
@@ -29,7 +29,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<ProtectedRoutes><Home /></ProtectedRoutes>} />
-          <Route path='/register-doctor' element={<ProtectedRoutes><RegisterDoctor /></ProtectedRoutes>} />
+          <Route path='/register-doctor' element={<ProtectedRoutes><RegisterDoc /></ProtectedRoutes>} />
           <Route path='/manage-doctors' element={<ProtectedRoutes><ManageDoctors /></ProtectedRoutes>} />
           <Route path='/register-patient' element={<ProtectedRoutes><RegisterPatient /></ProtectedRoutes>} />
           <Route path='/manage-patients' element={<ProtectedRoutes><ManagePatients /></ProtectedRoutes>} />
