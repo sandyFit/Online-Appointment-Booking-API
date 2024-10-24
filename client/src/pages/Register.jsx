@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { hideLoading, showLoading } from '../redux/alertSlice';
-import { setUserIdToRegister } from '../redux/userSlice'; 
+import { setUser } from '../redux/userSlice'; 
 
 
 const Register = () => {
@@ -47,7 +47,7 @@ const Register = () => {
                 const userId = response.data.user?.id;  // Safely access user.id
                 if (userId) {
                     console.log('User ID retrieved after registration:', userId);
-                    dispatch(setUserIdToRegister(userId));  // Dispatch user_id to Redux
+                    dispatch(setUser(userId));  // Dispatch user_id to Redux
                     toast.success('User registered successfully');
                     navigate('/login');
                 } else {
