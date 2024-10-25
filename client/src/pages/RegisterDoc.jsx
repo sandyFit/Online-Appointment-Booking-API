@@ -12,104 +12,98 @@ import { Button } from "antd";
 
 const RegisterDoctor = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    
-    // Assuming you have a way to get the new doctor's information from a form or selection
-    const [newDoctor, setNewDoctor] = useState({
+    const userIdToRegister = useSelector(state => state.user.userIdToRegister);
+
+    const [formState, setFormState] = useState({
         first_name: '',
         last_name: '',
         phone: '',
         email: '',
         specialty: '',
         experience: '',
-        available_hours: '',
-        
+        available_hours: ''
     });
 
-    // Example: Set user_id for the doctor to be registered (this should come from your user creation logic)
-    const userId = useSelector((state) => state.user.user.id); // Update accordingly
-    console.log("User ID to register as doctor:", userId);
-
-    useEffect(() => {
-        console.log('User ID to register as doctor:', userId); // Check user ID
-        if (!userId) {
-            console.error('User ID to register as doctor is missing.');
-        }
-    }, [userId]);
-
-
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setNewDoctor({
-            ...newDoctor,
-            [name]: value
+        setFormState({
+            ...formState,
+            [e.target.name]: e.target.value
         });
     };
 
     const handleTimeChange = (time, timeString) => {
+    if (timeString.length === 2) {
         const formattedTime = `${timeString[0]}-${timeString[1]}`;
-        setNewDoctor((prevData) => ({
+        setFormState((prevData) => ({
             ...prevData,
             available_hours: formattedTime
         }));
-    };
+    } else {
+        setFormState((prevData) => ({
+            ...prevData,
+            available_hours: '' // Reset if invalid
+        }));
+    }
+};
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const doctorData = { 
-        ...newDoctor, 
-        user_id: userId // This must be the user ID for the doctor
-    };
+        // Log user ID
+        console.log('User ID to Register:', userIdToRegister);
 
+        const doctorDetails = {
+            first_name: formState.first_name,
+            last_name: formState.last_name,
+            phone: formState.phone,
+            email: formState.email,
+            specialty: formState.specialty,
+            experience: formState.experience,
+            available_hours: formState.available_hours,
+            user_id: userIdToRegister
+        };
 
-        // Add validation for userId here if necessary
-        if (!userId) {
-            toast.error('User ID is required to register a doctor.');
-            return;
-        }
-        console.log("Register Doctor data:", doctorData); 
+        console.log('Doctor Details:', doctorDetails); // Log the details before sending
 
         try {
-            dispatch(showLoading());
-            const response = await axios.post('http://localhost:5050/doctors/register-doctor', doctorData, {
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            dispatch(hideLoading());
-            console.log('API Response:', response.data);
-
+            const response = await axios.post('http://localhost:5050/doctors/register-doctor', doctorDetails);
             if (response.data.success) {
-                const userIdFromResponse = response.data.user?.id; // Check if user.id exists
-                if (userIdFromResponse) {
-                    console.log('User ID:', userIdFromResponse);
-                    dispatch(setUserIdToRegister(userIdFromResponse)); // Dispatch the user ID to Redux
-                } else {
-                    console.error('User ID is missing from response.');
-                }
-
-                navigate('/manage-doctors');
-                setNewDoctor({ // Reset form
+                setSuccessMessage('Doctor registered successfully!');
+                setErrorMessage('');
+                // Reset the form
+                setFormState({
                     first_name: '',
                     last_name: '',
                     phone: '',
                     email: '',
                     specialty: '',
                     experience: '',
-                    available_hours: '',
+                    available_hours: ''
                 });
             } else {
-                toast.error(response.data.message);
+                setErrorMessage(response.data.errors.join(', ')); // Display validation errors
+                setSuccessMessage('');
             }
         } catch (error) {
-            console.error('Something went wrong:', error.response?.data || error.message);
-            dispatch(hideLoading());
-            toast.error('Something went wrong');
+            if (error.response) {
+                console.error('Server response:', error.response.data);
+                // Log the validation errors
+                if (error.response.data.errors && error.response.data.errors.length > 0) {
+                    console.error('Validation Errors:', error.response.data.errors);
+                }
+                setErrorMessage(error.response.data.message || 'Error registering doctor. Please try again.');
+            } else {
+                setErrorMessage('Error registering doctor. Please try again.');
+            }
+            setSuccessMessage('');
         }
     };
 
- 
+
     return (
         <Dashboard>
             <h1 className='title-h5 uppercase text-indigo-900 text-center mt-6'>
@@ -131,7 +125,7 @@ const RegisterDoctor = () => {
                                 placeholder='Enter your first name'
                                 required
                                 className='input w-[20vw]'
-                                value={newDoctor.first_name}
+                                value={formState.first_name}
                                 onChange={handleChange}
                             />
                         </label>
@@ -144,7 +138,7 @@ const RegisterDoctor = () => {
                                 placeholder='Enter your last name'
                                 required
                                 className='input w-[20vw]'
-                                value={newDoctor.last_name}
+                                value={formState.last_name}
                                 onChange={handleChange}
                             />
                         </label>
@@ -157,7 +151,7 @@ const RegisterDoctor = () => {
                                 placeholder='Enter your phone number'
                                 required
                                 className='input w-[20vw]'
-                                value={newDoctor.phone}
+                                value={formState.phone}
                                 onChange={handleChange}
                             />
                         </label>
@@ -173,7 +167,7 @@ const RegisterDoctor = () => {
                                 placeholder='Enter your email address'
                                 required
                                 className='input w-[20vw]'
-                                value={newDoctor.email}
+                                value={formState.email}
                                 onChange={handleChange}
                             />
                         </label>
@@ -194,7 +188,7 @@ const RegisterDoctor = () => {
                                 placeholder='Enter your specialty'
                                 required
                                 className='input w-[20vw]'
-                                value={newDoctor.specialty}
+                                value={formState.specialty}
                                 onChange={handleChange}
                             />
                         </label>
@@ -207,7 +201,7 @@ const RegisterDoctor = () => {
                                 placeholder='Enter years of experience'
                                 required
                                 className='input w-[20vw]'
-                                value={newDoctor.experience}
+                                value={formState.experience}
                                 onChange={handleChange}
                             />
                         </label>

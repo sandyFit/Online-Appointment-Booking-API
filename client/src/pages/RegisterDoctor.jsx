@@ -58,6 +58,8 @@ const RegisterDoctor = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        
+
         const doctorData = { 
         ...newDoctor, 
         user_id: userId // This must be the user ID for the doctor
