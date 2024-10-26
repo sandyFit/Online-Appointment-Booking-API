@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { hideLoading, showLoading } from '../redux/alertSlice';
-import { setUser } from '../redux/userSlice'; 
+import { setUser } from '../redux/userSlice3'; 
 
 
 const Register = () => {

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const alertSlice = createSlice({
+const alertSlice = createSlice({
     name: "alerts",
     initialState: {
         loading: false,
@@ -28,11 +28,11 @@ export const alertSlice = createSlice({
 });
 
 // Export actions for use in components
-const { showLoading, hideLoading, setError, setSuccess } = alertSlice.actions;
-
-export { showLoading, hideLoading, setError, setSuccess };
+export const { showLoading, hideLoading, setError, setSuccess } = alertSlice.actions;
 
 // Selector for accessing loading state
 export const selectLoading = (state) => state.alerts.loading;
 export const selectError = (state) => state.alerts.error;
 export const selectSuccess = (state) => state.alerts.success;
+
+export default alertSlice.reducer; // Ensure this is the default export

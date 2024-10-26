@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { hideLoading, showLoading } from '../redux/alertSlice';
-import { setUser, clearUser } from '../redux/userSlice'; // Import clearUser action
+import { setUser, clearUser } from '../redux/userSlice'; // Import the necessary actions
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -14,6 +14,9 @@ const Login = () => {
         email: '',
         password: ''
     });
+
+    // Move useSelector here to get the current user state
+    const currentUser = useSelector((state) => state.user);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -48,6 +51,7 @@ const Login = () => {
             // Check if the response indicates success
             if (response.data.success) {
                 console.log(response.data.message);
+                
                 toast.success(response.data.message);
                 toast('Redirecting to homepage');
 
@@ -61,29 +65,45 @@ const Login = () => {
                 // Dispatch setUser action
                 dispatch(setUser({
                     id: response.data.user.id,
-                    username: response.data.user.username,
-                    email: response.data.user.email,
+                    username: response.data.user.username || "No username provided",
+                    email: response.data.user.email || "No email provided",
                     user_type: response.data.user.user_type // Include user_type
                 }));
+
+                // Log the current user state
+                console.log("Current Redux State:", currentUser);
 
                 // Redirect to homepage or wherever necessary
                 navigate('/');
             } else {
                 // Specific error handling based on response message
-                if (response.data.message === 'User not found') {
-                    toast.error('No account found with that email address.');
-                } else if (response.data.message === 'Incorrect password') {
-                    toast.error('The password you entered is incorrect. Please try again.');
-                } else {
-                    toast.error('An unknown error occurred. Please try again later.');
-                }
+                handleLoginError(response.data.message);
             }
         } catch (error) {
-            console.log('Response data:', error.response.data);
-            console.log('Response status:', error.response.status);
-            console.log('Response headers:', error.response.headers);
+            console.error('Error during login:', error);
             dispatch(hideLoading());
-            toast.error('An error occurred while processing your request. Please try again later.');
+
+            // Handle error if it doesn't come from Axios
+            if (error.response) {
+                console.log('Response data:', error.response.data);
+                console.log('Response status:', error.response.status);
+                console.log('Response headers:', error.response.headers);
+                toast.error(error.response.data.message || 'An error occurred while processing your request. Please try again later.');
+            } else {
+                // Handle network error or other errors not related to response
+                toast.error('Network error. Please check your connection and try again.');
+            }
+        }
+    };
+
+    const handleLoginError = (message) => {
+        // Specific error handling based on response message
+        if (message === 'User not found') {
+            toast.error('No account found with that email address.');
+        } else if (message === 'Incorrect password') {
+            toast.error('The password you entered is incorrect. Please try again.');
+        } else {
+            toast.error('An unknown error occurred. Please try again later.');
         }
     };
 

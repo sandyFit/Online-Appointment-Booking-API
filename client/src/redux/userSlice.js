@@ -1,28 +1,46 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-// In your Redux slice
-export const userSlice = createSlice({
+export const registerUser = createAsyncThunk('user/register', async (userData) => {
+    const response = await axios.post('http://localhost:5050/users/register', userData);
+    return response.data;
+});
+
+export const loginUser = createAsyncThunk('user/login', async (loginData) => {
+    const response = await axios.post('http://localhost:5050/users/login', loginData);
+    return response.data;
+});
+
+const userSlice = createSlice({
     name: 'user',
-    initialState: {
-        user: null,
-        userIdToRegister: null, // Track user ID for registration
-    },
+    initialState: { user: null, loading: false, error: null },
     reducers: {
         setUser: (state, action) => {
-            state.user = action.payload;
+            state.user = action.payload; // Add this line
         },
-        setUserIdToRegister: (state, action) => {
-            state.userIdToRegister = action.payload; // Set user ID for registration
-        },
-        clearUser: (state) => {
-            state.user = null;
-            state.userIdToRegister = null; // Clear user ID when user logs out or is cleared
-        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(registerUser.pending, (state) => { state.loading = true; })
+            .addCase(registerUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(registerUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+            .addCase(loginUser.pending, (state) => { state.loading = true; })
+            .addCase(loginUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(loginUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            });
     },
 });
 
-// Export actions
-export const { setUser, setUserIdToRegister, clearUser } = userSlice.actions;
-
-// Export reducer to add to the Redux store
+export const { setUser } = userSlice.actions; // Export setUser
 export default userSlice.reducer;

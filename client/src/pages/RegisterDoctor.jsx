@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { hideLoading, showLoading } from '../redux/alertSlice';
 import { TimePicker } from "antd";
 import { Button } from "antd";
-import { setUserIdToRegister } from '../redux/userSlice';
+import { setUserIdToRegister } from '../redux/userSlice3';
 
 
 const RegisterDoctor = () => {
@@ -27,7 +27,8 @@ const RegisterDoctor = () => {
     });
 
     // Example: Set user_id for the doctor to be registered (this should come from your user creation logic)
-    const userId = useSelector((state) => state.user.userIdToRegister); // Update accordingly
+    const userId = useSelector((state) => state.user.userIdToRegister);
+
     console.log("User ID to register as doctor:", userId);
 
     useEffect(() => {

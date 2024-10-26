@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import LoginUser from './pages/LoginUser';
+import RegisterUser from './pages/RegisterUser';
 import { Toaster } from 'react-hot-toast';
 import Home from './pages/Home.jsx';
 import { Provider } from 'react-redux';
@@ -34,8 +34,8 @@ root.render(
           <Route path='/register-patient' element={<ProtectedRoutes><RegisterPatient /></ProtectedRoutes>} />
           <Route path='/manage-patients' element={<ProtectedRoutes><ManagePatients /></ProtectedRoutes>} />
         </Route>
-        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-        <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+        <Route path="/login" element={<PublicRoute><LoginUser /></PublicRoute>} />
+        <Route path="/register" element={<PublicRoute><RegisterUser /></PublicRoute>} />
       </Routes>
     </Router>
   </Provider>
