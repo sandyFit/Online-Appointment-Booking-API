@@ -2,8 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import userRouter from './routes/userRoute.js'; 
-import doctorRouter from './routes/doctorRoutes.js';
-import patientRouter from './routes/patientRoutes.js';
+
 
 dotenv.config({ path: './config/.env' });
 
@@ -16,8 +15,7 @@ app.use(express.json());
 
 // Routes
 app.use('/users', userRouter); 
-app.use('/doctors', doctorRouter); 
-app.use('/patients', patientRouter);
+
 
 // 404 Catch-All Route
 app.use((req, res, next) => {
