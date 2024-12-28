@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { hideLoading, showLoading } from '../redux/alertSlice';
-import { setUser, clearUser } from '../redux/userSlice'; // Import the necessary actions
+import { setUser } from '../redux/userSlice'; // Import the necessary actions
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -59,8 +59,6 @@ const Login = () => {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('user_type', response.data.user.user_type); // Store userType in localStorage
 
-                // Optional: Clear any existing user before setting new one
-                dispatch(clearUser()); // Clear previous user data
 
                 // Dispatch setUser action
                 dispatch(setUser({

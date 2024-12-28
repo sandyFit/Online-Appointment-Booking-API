@@ -29,7 +29,7 @@ const queryUser = async (condition, params) => {
     }
 };
 
-// Function to register a new user
+// **** FUNCTION TO REGISTER A NEW USER ****
 export const registerUser = async ({ username, email, password, user_type }) => {
     try {
         // Check if user already exists

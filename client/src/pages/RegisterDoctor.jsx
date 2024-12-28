@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { hideLoading, showLoading } from '../redux/alertSlice';
 import { TimePicker } from "antd";
 import { Button } from "antd";
-import { setUserIdToRegister } from '../redux/userSlice3';
+import { setUserIdToRegister } from '../redux/userSlice';
 
 
 const RegisterDoctor = () => {
